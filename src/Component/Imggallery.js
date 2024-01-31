@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchImageList } from "../Redux/Img/Action";
+import { fetchImageList } from "../Redux/action/imageAction";
 
 const Imggallery = () => {
   const data = useSelector((state) => state.imglist);
@@ -9,15 +9,28 @@ const Imggallery = () => {
     dispatch(fetchImageList());
   }, []);
 
+  if (data.error) {
+    return <p>{data.error}</p>;
+  }
+
   return (
-    <div>
+    <div
+      style={{
+        // display: "grid",
+        // placeItems: "center",
+        // width: "100%",
+        display: "flex",
+        flexWrap: "wrap",
+        padding: "0 4px",
+      }}
+    >
       {/* {JSON.stringify(data.data)} */}
       {data &&
         data.data &&
         data.data.map((item) => (
-          <div>
-            <h1>{item.title}</h1>
-            <img src={item.url}></img>
+          <div style={{ margin: 2, width: "200px" }}>
+            <h1 style={{ fontSize: 8 }}>{item.title}</h1>
+            <img src={item.url} style={{ height: 100, width: 100 }}></img>
           </div>
         ))}
     </div>
